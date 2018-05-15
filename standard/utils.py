@@ -72,7 +72,7 @@ class DataIterator:
                 im = im.swapaxes(0, 1)
                 self.image.append(np.array(im))
                 # image is named as ./<folder>/00000_abcd.png
-                print('img_name', image_name)
+                # print('img_name', image_name)
                 code = image_name.split('/')[-1].split('_')[1].split('.')[0]
                 code = [SPACE_INDEX if code == SPACE_TOKEN else encode_maps[c] for c in list(code)]
                 self.labels.append(code)
@@ -114,8 +114,8 @@ class DataIterator:
         batch_inputs, batch_seq_len = get_input_lens(np.array(image_batch))
         #batch_inputs,batch_seq_len = pad_input_sequences(np.array(image_batch))
         batch_labels = sparse_tuple_from_label(label_batch)
-        print('batch_inputs,batch_seq_length,batch_labels:', np.shape(
-            batch_inputs), np.shape(batch_seq_len), np.shape(batch_labels))
+        
+        
         return batch_inputs, batch_seq_len, batch_labels
 
 

@@ -154,12 +154,15 @@ def train(train_dir=None, val_dir=None):
         val_feed = {g.inputs: val_inputs,
                     g.labels: val_labels,
                     g.seq_len: val_seq_len}
+
         for cur_epoch in range(FLAGS.num_epochs):
             shuffle_idx = np.random.permutation(num_train_samples)
             train_cost = train_err = 0
             start_time = time.time()
             batch_time = time.time()
             # the tracing part
+            count = 1
+
             for cur_batch in range(num_batches_per_epoch):
                 if (cur_batch+1) % 100 == 0:
                     print('batch', cur_batch, ': time', time.time()-batch_time)
@@ -170,6 +173,14 @@ def train(train_dir=None, val_dir=None):
                         cur_batch * FLAGS.batch_size, (cur_batch + 1) * FLAGS.batch_size)]
                 batch_inputs, batch_seq_len, batch_labels = train_feeder.input_index_generate_batch(
                     indexs)
+                print(count)
+                print('batch_inputs,batch_seq_length,batch_labels:', np.shape(
+                    batch_inputs), np.shape(batch_seq_len), np.shape(batch_labels))
+                print(batch_seq_len)
+                print(
+                    'batch_labels', np.shape(batch_labels[0]),
+                    np.shape(batch_labels[1]),
+                    batch_labels[2])
                 # batch_inputs,batch_seq_len,batch_labels=utils.gen_batch(FLAGS.batch_size)
                 feed = {g.inputs: batch_inputs,
                         g.labels: batch_labels,
@@ -194,6 +205,8 @@ def train(train_dir=None, val_dir=None):
                 # trace_file.close()
 
                 train_writer.add_summary(summary_str, step)
+                count += 1
+                print(count)
 
                 # save the checkpoint
                 if step % FLAGS.save_steps == 1:
