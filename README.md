@@ -1,11 +1,11 @@
-1. [backup](https://github.com/ilovin/lstm_ctc_ocr/tree/backup):
+1. [lstm_ctc_ocr](https://github.com/xiaofengShi/CTC_TF/tree/lstm_ctc_ocr):
     - old master branch
     - harder to converge compare to the beta version
     - both standard ctc and warpCTC
     - read data at once
-2. [dev](https://github.com/ilovin/lstm_ctc_ocr/tree/dev):
+2. [warpctc+tensorflow](https://github.com/xiaofengShi/CTC_TF/tree/warpctc+tensorflow):
     - the pipline version of lstm_ctc_ocr, resize to same size
-3. [beta](https://github.com/ilovin/lstm_ctc_ocr/tree/beta):
+3. [warpctc+tensorflow](https://github.com/xiaofengShi/CTC_TF/tree/warpctc+tensorflow):
     - generate data on the fly
     - deal with multi-width image, padding to same width
 
