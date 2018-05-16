@@ -1,11 +1,14 @@
-- [old master](https://github.com/ilovin/lstm_ctc_ocr/tree/backup):
+TensorFlow+CTC/warpctc实现不定长字符识别
+==============
+# 仓库分支介绍
+- [lstm_ctc_ocr](https://github.com/xiaofengShi/CTC_TF/tree/lstm_ctc_ocr):
     - harder to converge compare to the beta version
     - both standard ctc and warpCTC
     - read data at once
-- [dev](https://github.com/ilovin/lstm_ctc_ocr/tree/dev):
+- [warpctc+tensorflow](https://github.com/xiaofengShi/CTC_TF/tree/warpctc+tensorflow):
     - the pipline version of lstm_ctc_ocr, resize to same size
     - use tf.records
-- [beta](https://github.com/ilovin/lstm_ctc_ocr/tree/beta) (current):
+- [padding_warpctc](https://github.com/xiaofengShi/CTC_TF/tree/padding_warpctc) (current):
     - generate data on the fly
     - deal with multi-width image, padding to same width
 
