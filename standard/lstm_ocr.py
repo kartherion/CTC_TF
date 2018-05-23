@@ -89,7 +89,7 @@ class Graph(object):
 
             self.global_step = tf.Variable(0, trainable=False)
 
-            self.loss = tf.nn.ctc_loss(labels=self.labels, inputs=logits, ß
+            self.loss = tf.nn.ctc_loss(labels=self.labels, inputs=logits,
                                        sequence_length=self.seq_len)
             self.cost = tf.reduce_mean(self.loss)
 
@@ -109,10 +109,9 @@ class Graph(object):
             # (it's slower but you'll get better results)
             #decoded, log_prob = tf.nn.ctc_greedy_decoder(logits, seq_len,merge_repeated=False)
 
-            # self.decoded, self.log_prob = tf.nn.ctc_beam_search_decoder(
-            #     logits, self.seq_len, merge_repeated=False)
             self.decoded, self.log_prob = tf.nn.ctc_beam_search_decoder(
-                logits, lengthout, merge_repeated=False)
+                logits, self.seq_len, merge_repeated=False)
+
             self.dense_decoded = tf.sparse_tensor_to_dense(self.decoded[0], default_value=-1)
             # Inaccuracy: label error rate
             self.lerr = tf.reduce_mean(tf.edit_distance(
