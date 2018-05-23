@@ -85,10 +85,11 @@ class Graph(object):
 
             # Time major
             logits = tf.transpose(logits, (1, 0, 2))
+            constant_value = tf.shape(logits)[0]
 
             self.global_step = tf.Variable(0, trainable=False)
 
-            self.loss = tf.nn.ctc_loss(labels=self.labels, inputs=logits,
+            self.loss = tf.nn.ctc_loss(labels=self.labels, inputs=logits, ß
                                        sequence_length=self.seq_len)
             self.cost = tf.reduce_mean(self.loss)
 
@@ -107,8 +108,11 @@ class Graph(object):
             # Option 2: tf.contrib.ctc.ctc_beam_search_decoder
             # (it's slower but you'll get better results)
             #decoded, log_prob = tf.nn.ctc_greedy_decoder(logits, seq_len,merge_repeated=False)
+
+            # self.decoded, self.log_prob = tf.nn.ctc_beam_search_decoder(
+            #     logits, self.seq_len, merge_repeated=False)
             self.decoded, self.log_prob = tf.nn.ctc_beam_search_decoder(
-                logits, self.seq_len, merge_repeated=False)
+                logits, lengthout, merge_repeated=False)
             self.dense_decoded = tf.sparse_tensor_to_dense(self.decoded[0], default_value=-1)
             # Inaccuracy: label error rate
             self.lerr = tf.reduce_mean(tf.edit_distance(
@@ -173,9 +177,9 @@ def train(train_dir=None, val_dir=None):
                         cur_batch * FLAGS.batch_size, (cur_batch + 1) * FLAGS.batch_size)]
                 batch_inputs, batch_seq_len, batch_labels = train_feeder.input_index_generate_batch(
                     indexs)
-                print(count)
+                print('num_classes', num_classes)
                 print('batch_inputs,batch_seq_length,batch_labels:', np.shape(
-                    batch_inputs), np.shape(batch_seq_len), np.shape(batch_labels))
+                    batch_inputs), batch_seq_len, np.shape(batch_labels))
                 print(batch_seq_len)
                 print(
                     'batch_labels', np.shape(batch_labels[0]),
@@ -236,5 +240,5 @@ def train(train_dir=None, val_dir=None):
 
 
 if __name__ == '__main__':
-    train(train_dir='/Users/xiaofeng/Code/Github/dataset/OCR/img/train',
-          val_dir='/Users/xiaofeng/Code/Github/dataset/OCR/img/val')
+    train(train_dir='/Users/xiaofeng/Code/Github/dataset/charactor_lstm_ctc/img/train',
+          val_dir='/Users/xiaofeng/Code/Github/dataset/charactor_lstm_ctc/img/val')
