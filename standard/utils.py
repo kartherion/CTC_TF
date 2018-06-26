@@ -52,6 +52,8 @@ for i, char in enumerate(charset, 1):
     decode_maps[i] = char
 encode_maps[SPACE_TOKEN] = SPACE_INDEX
 decode_maps[SPACE_INDEX] = SPACE_TOKEN
+print('encode_maps', encode_maps)
+print('decode_maps', decode_maps)
 
 
 class DataIterator:
@@ -113,9 +115,9 @@ class DataIterator:
             return sequences, lengths
         batch_inputs, batch_seq_len = get_input_lens(np.array(image_batch))
         #batch_inputs,batch_seq_len = pad_input_sequences(np.array(image_batch))
+        print('batch_labels:', label_batch)
         batch_labels = sparse_tuple_from_label(label_batch)
-        
-        
+
         return batch_inputs, batch_seq_len, batch_labels
 
 

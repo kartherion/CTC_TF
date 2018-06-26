@@ -239,5 +239,5 @@ def train(train_dir=None, val_dir=None):
 
 
 if __name__ == '__main__':
-    train(train_dir='/Users/xiaofeng/Code/Github/dataset/charactor_lstm_ctc/img/train',
-          val_dir='/Users/xiaofeng/Code/Github/dataset/charactor_lstm_ctc/img/val')
+    train(train_dir='/Users/xiaofeng/Code/Github/CTC_TF/train',
+          val_dir='/Users/xiaofeng/Code/Github/CTC_TF/val')
